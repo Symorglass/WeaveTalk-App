@@ -32,8 +32,6 @@ function PostThread({ userId }: Props) {
     const router = useRouter();
     const pathname = usePathname();
     const { organization } = useOrganization();
-
-    console.log(`ORG!!!!!!!!!! ${organization.id}`);
     
     // 1. Define the form, and to save user data
     const form = useForm({
