@@ -1,11 +1,12 @@
 "use server"    // Directs that this module runs on the server side in a Next.js environment.
 
 import { revalidatePath } from "next/cache";
-import User from "../models/user.model";
-import Thread from "../models/thread.model";
 import { connectToDB } from "../mongoose"
 import { FilterQuery, SortOrder } from "mongoose";
-import { connect } from "http2";
+
+import User from "../models/user.model";
+import Thread from "../models/thread.model";
+import Community from "../models/community.model";
 
 interface Params {
     userId: string;
@@ -56,12 +57,11 @@ export async function fetchUser(userId: string) {
         connectToDB();
 
         // Return the user details while populating related community data
-        return await User
-            .findOne({ id: userId })
-            // .populate({
-            //     path: 'communities', // Populate the communities associated with the user
-            //     model: Community  // Specify the model to use for population
-            // })
+        return await User.findOne({ id: userId })
+            .populate({
+                path: 'communities', // Populate the communities associated with the user
+                model: Community  // Specify the model to use for population
+            })
     } catch (error: any) {
         throw new Error(`Failed to fetch user: ${error.message}`);
     }
@@ -71,25 +71,31 @@ export async function fetchUser(userId: string) {
 export async function fetchUserPosts(userId: string) {
     try {
         connectToDB();
-        // Find all posts authored by the user with the given userId
 
+        // Find all posts authored by the user with the given userId
         const threads = await User.findOne({ id: userId })
             .populate({
-                path: 'threads',
+                path: "threads",
                 model: Thread,
-                options: { sort: { 'createdAt': -1 } },  // Sort threads in descending order by createdAt
-                populate: {
-                    path: 'children',
-                    model: Thread,
-                    options: { sort: { 'createdAt': -1 } },  // Assuming you want children also sorted
-                    populate: {
-                        path: 'author',
-                        model: User,
-                        select: 'name image id'
-                    }
-                }
-            })
-        // TODO: populate community
+                populate: [
+                    {
+                        path: "community",
+                        model: Community,
+                        // options: { sort: { 'createdAt': -1 } },  // Sort threads in descending order by createdAt
+                        select: "name id image _id", 
+                    },
+                    {
+                        path: "children",
+                        model: Thread,
+                        // options: { sort: { 'createdAt': -1 } },  // children also sorted
+                        populate: {
+                            path: "author",
+                            model: User,
+                            select: "name image id", 
+                        },
+                    },
+                ],
+            });
 
         return threads;
 
@@ -175,7 +181,8 @@ export async function getActivity(userId: string) {
             path: 'author', // The populate method is used to replace the author field in each retrieved thread with detailed information about the author (from the User collection). Only the author’s name, image, and _id are selected to be returned.
             model: User,
             select: 'name image _id'
-        }).sort({ createdAt: -1 });  // Adding a sort method to order by createdAt in descending order
+        })
+        // .sort({ createdAt: -1 });  // Adding a sort method to order by createdAt in descending order
 
         return replies;
 

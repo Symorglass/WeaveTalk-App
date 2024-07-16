@@ -1,10 +1,11 @@
 "use server"    // Directs that this module runs on the server side in a Next.js environment.
 
 import { connectToDB } from "../mongoose";
+import { revalidatePath } from "next/cache";
+
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
-import { revalidatePath } from "next/cache";
-import { Children } from "react";
+import Community from "../models/community.model";
 
 interface Params {
     text: string,
@@ -21,18 +22,30 @@ export async function createThread({
 }: Params) {
     try {
         connectToDB();
+
+        const communityIdObject = await Community.findOne(
+            { id: communityId },
+            { _id: 1 }
+          );
         
         // 1. instantiates a new thread document with the properties passed to it, saved to the MongoDB database
         const createdThread = await Thread.create({
             text,
             author, // ObjectId
-            community: null,
+            community: communityIdObject,
         });
     
         // 2. Update user model
         await User.findByIdAndUpdate(author, {
             $push: { threads: createdThread._id }  // puah ObjectId into therads array 
         });
+
+        // 3. Update community model
+        if (communityIdObject) {
+            await Community.findByIdAndUpdate(communityIdObject, {
+              $push: { threads: createdThread._id },
+            });
+          }
     
         // revalidate path
         revalidatePath(path);     // Calling revalidatePath triggers the server to regenerate the page at the specified path, ensuring that the next time someone accesses this page, they receive the most updated content.
@@ -54,7 +67,14 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
         .sort({ createdAt: 'desc' })
         .skip(skipAmount)
         .limit(pageSize)
-        .populate({ path: 'author', model: User })
+        .populate({ 
+            path: 'author', 
+            model: User 
+        })
+        .populate({
+            path: "community",
+            model: Community,
+        })
         .populate({  
             path: 'children',
             populate: {    // resursively populate the children thread (comments)
@@ -81,13 +101,17 @@ export async function fetchThreadById(id: string) {
     connectToDB();
 
     try {
-        // TODO: Populate Community 
         const thread = await Thread.findById(id)
             .populate({ // populate current thread
                 path: 'author',
                 model: User,
                 select: '_id id name image'  // choose specific properties from User to populate 
             })
+            .populate({
+                path: "community",
+                model: Community,
+                select: "_id id name image",
+            }) // Populate the community field with _id and name
             .populate({  // populate the list of children i.e. comment of the thread 
                 path: 'children',
                 populate: [   // it's a list of comment
