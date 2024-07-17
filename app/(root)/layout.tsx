@@ -11,8 +11,8 @@ import LeftSidebar from '@/components/shared/LeftSidebar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'ThreadsBite',
-  description: 'A Next.js 13 Meta Threads Mini Application'
+  title: 'WeaveTalk',
+  description: 'A Next.js 13 Mini Social Media Application'
 }
 
 export default function RootLayout({

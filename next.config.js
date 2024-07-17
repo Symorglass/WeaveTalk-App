@@ -27,9 +27,10 @@ const nextConfig = {
           protocol: "https",
           hostname: "placehold.co",
         },
-      ],
-      domains: [
-        'utfs.io'
+        {
+          protocol: "https",
+          hostname: "utfs.io",
+        }
       ],
     },
   };

@@ -185,12 +185,12 @@ export async function fetchRepliesById(id: string, pageNumber = 1, pageSize = 20
     try {
         const skipAmount = (pageNumber - 1) * pageSize;
 
-        // Fetch threads that are children of threads authored by the specified user
+        // Fetch posts that are children of posts authored by the specified user
         const user = await User.findOne({id: id});
         const threadsQuery = Thread
             .find({
                 author: user._id,
-                parentId: { $ne: null }, // Ensure these threads have parents
+                parentId: { $ne: null }, // Ensure these posts have parents
             })
             .sort({ createdAt: 'desc' })
             .skip(skipAmount)

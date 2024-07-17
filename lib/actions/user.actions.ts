@@ -165,10 +165,10 @@ export async function getActivity(userId: string) {
     try {
         connectToDB();
 
-        // find all threads by current user
+        // find all posts by current user
         const userThreads = await Thread.find({ author: userId })
 
-        // Collect all the child thread ids (comments) from the 'children' field of the threads
+        // Collect all the child thread ids (comments) from the 'children' field of the posts
         const childThreadIds = userThreads.reduce((acc, userThread) => {
             return acc.concat(userThread.children)
         }, []);  // [] is default value to add to the accumulator to start the reduce

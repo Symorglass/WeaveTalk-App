@@ -6,8 +6,8 @@ import '../globals.css';
 // specify different rules for the auth routes
 // Search engine optimization (SEO)
 export const metadata = {
-    title: 'ThreadsBite',
-    description: 'A Next.js 13 Meta Threads Mini Application'
+    title: 'WeaveTalk',
+    description: 'A Next.js 13 Mini Social Media Application'
 }
 
 const inter = Inter({ subsets: ['latin']}) // import font from next/font/google, call it as a function, get latin subset
