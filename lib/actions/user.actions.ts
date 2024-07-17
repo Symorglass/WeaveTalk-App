@@ -81,13 +81,13 @@ export async function fetchUserPosts(userId: string) {
                     {
                         path: "community",
                         model: Community,
-                        // options: { sort: { 'createdAt': -1 } },  // Sort threads in descending order by createdAt
+                        options: { sort: { 'createdAt': -1 } },  // Sort threads in descending order by createdAt
                         select: "name id image _id", 
                     },
                     {
                         path: "children",
                         model: Thread,
-                        // options: { sort: { 'createdAt': -1 } },  // children also sorted
+                        options: { sort: { 'createdAt': -1 } },  // children also sorted
                         populate: {
                             path: "author",
                             model: User,
@@ -182,7 +182,7 @@ export async function getActivity(userId: string) {
             model: User,
             select: 'name image _id'
         })
-        // .sort({ createdAt: -1 });  // Adding a sort method to order by createdAt in descending order
+        .sort({ createdAt: -1 });  // Adding a sort method to order by createdAt in descending order
 
         return replies;
 

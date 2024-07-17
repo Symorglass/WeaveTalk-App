@@ -2,6 +2,7 @@
 
 import { connectToDB } from "../mongoose";
 import { revalidatePath } from "next/cache";
+import mongoose from 'mongoose';
 
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
@@ -174,5 +175,52 @@ export async function addCommentToThread(
         
     } catch (error: any) {
         throw new Error(`Error adding comment to thread: ${error.message}`);
+    }
+}
+
+
+export async function fetchRepliesById(id: string, pageNumber = 1, pageSize = 20) {
+    connectToDB();
+
+    try {
+        const skipAmount = (pageNumber - 1) * pageSize;
+
+        // Fetch threads that are children of threads authored by the specified user
+        const user = await User.findOne({id: id});
+        const threadsQuery = Thread
+            .find({
+                author: user._id,
+                parentId: { $ne: null }, // Ensure these threads have parents
+            })
+            .sort({ createdAt: 'desc' })
+            .skip(skipAmount)
+            .limit(pageSize)
+            .populate({
+                path: 'author',
+                model: User,
+                select: 'id _id name image'
+            })
+            .populate({
+                path: 'children',
+                model: Thread,
+                populate: {
+                    path: 'author',
+                    model: User,
+                    select: 'id _id name image'
+                }
+            });
+       
+        const totalThreadsCount = await Thread.countDocuments({
+            parentId: { $ne: null },
+            author: user._id
+        });
+
+        const threads = await threadsQuery.exec();
+        const isNext = totalThreadsCount > skipAmount + threads.length;
+
+        return { threads, isNext };
+
+    } catch (error: any) {
+        throw new Error(`Error fetching replies: ${error.message}`);
     }
 }

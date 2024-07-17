@@ -39,6 +39,7 @@ const ThreadCard = ({
     comments,
     isComment,
 }: Props) => {
+
     return (
         <article className={`flex w-full flex-col rounded-lg ${isComment ? 'px-0 xs:px-7' : 'bg-dark-2 p-7'}`}>
             <div className="flex items-start justify-between">
@@ -60,12 +61,19 @@ const ThreadCard = ({
                     
                     <div className="flex w-full flex-col">
 
-                        {/* author linked to author page */}
-                        <Link href={`/profile/${author.id}`} className="w-fit">
-                            <h4 className="cursor-pointer text-base-semibold text-light-1">
-                                {author.name}
-                            </h4>
-                        </Link>
+                        <div className="flex gap-3.5">
+                            {/* author linked to author page */}
+                            <Link href={`/profile/${author.id}`} className="w-fit">
+                                <h4 className="cursor-pointer text-base-semibold text-light-1">
+                                    {author.name}
+                                </h4>
+                            </Link>
+
+                            {/* post created datetime */}
+                            <p className={'mt-1 text-subtle-medium text-gray-600'}>
+                                {formatDateString(createdAt)}
+                            </p>
+                        </div>
 
                         {/* content of the thread */}
                         <p className="mt-2 text-small-regular text-light-2">
@@ -105,21 +113,25 @@ const ThreadCard = ({
                                     height={24}
                                     className="cursor-pointer object-contain"
                                 />
-                            </div>
 
+
+                            </div>
                             
-                            {comments && comments.length > 0 && (
-                                <Link href={`/thread/${id}`}> 
-                                    <p className="mt-1 text-subtle-medium text-gray-1">
-                                        {comments.length} repl{comments.length > 1 ? "ies" : "y"}
-                                    </p>
-                                </Link>
-                            )}
+                            <div>
+                                {comments && comments.length > 0 && (
+                                    <Link href={`/thread/${id}`}> 
+                                        <p className="mt-1 text-subtle-medium text-gray-1">
+                                            {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+                                        </p>
+                                    </Link>
+                                )}
+                            </div>
 
                         </div>
                     </div>
                 </div>
             </div>
+
 
                 {!isComment && community && (
                     <Link 

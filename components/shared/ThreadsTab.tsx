@@ -1,20 +1,37 @@
-import { fetchUserPosts } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 import ThreadCard from "../cards/ThreadCard";
+
+import { fetchUserPosts } from "@/lib/actions/user.actions";
+import { fetchCommunityDetails, fetchCommunityPosts } from "@/lib/actions/community.actions";
+import { fetchRepliesById } from "@/lib/actions/thread.actions";
 
 interface Props {
     currentUserId: string;
     accountId: string;
     accountType: string;
+    tabType: string;
 }
 
 const ThreadsTab = async ({
     currentUserId,
     accountId,
-    accountType
+    accountType,
+    tabType
 }: Props) => {
-    // Fetch profile threads
-    let result = await fetchUserPosts(accountId);
+
+    // Fetch profile or community threads
+    let result: any;
+
+    if(accountType === 'Community') {
+        result = await fetchCommunityPosts(accountId);
+    } else {
+        if(tabType === 'Replies') {
+            result = await fetchRepliesById(accountId);
+        } else {
+            result = await fetchUserPosts(accountId);
+        }
+    }
+
     if(!result) redirect('/');
 
     return (
@@ -27,7 +44,7 @@ const ThreadsTab = async ({
                     parentId={thread.parentId}
                     content={thread.text}
                     author={
-                        accountType === "User"? {
+                        (accountType === "User" && tabType !== 'Replies') ? {
                             name: result.name,
                             image: result.image,
                             id: result.id
@@ -37,7 +54,7 @@ const ThreadsTab = async ({
                             id: thread.author.id
                         }
                     } 
-                    community={thread.community} // TODO
+                    community={thread.community} 
                     createdAt={thread.createdAt}
                     comments={thread.children}
                 />
