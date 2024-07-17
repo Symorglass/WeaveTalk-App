@@ -120,8 +120,6 @@ const ThreadCard = ({
                     </div>
                 </div>
             </div>
-                
-                {/* {`ORG!!!!!!!!!! ${community}`} */}
 
                 {!isComment && community && (
                     <Link 

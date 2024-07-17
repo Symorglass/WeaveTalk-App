@@ -1,5 +1,10 @@
-// Test serverless function
-export default function handler(req, res) {
+import { NextResponse } from "next/server";
+
+export const POST = async (request: Request) => {
+    // test
     console.log('Entered the serverless function');
-    res.status(200).json({ dummy: "data" });
+    return NextResponse.json(
+      { message: "dummy data" },
+      { status: 200 }
+    );
 }
