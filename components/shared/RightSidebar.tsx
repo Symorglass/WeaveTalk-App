@@ -11,7 +11,7 @@ async function RightSidebar() {
 
   const similarMinds = await fetchUsers({
     userId: user.id,
-    pageSize: 1,
+    pageSize: 20,
   });
 
   const suggestedCOmmunities = await fetchCommunities({ pageSize: 4 });
