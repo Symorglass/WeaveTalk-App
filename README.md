@@ -30,7 +30,7 @@ Make sure you have the following installed on your machine:
 - Node.js
 - npm (Node Package Manager)
 
-To reproduce this project, first, clone the git repository in a directory of your choosing: 
+First, clone the git repository in a directory of your choosing: 
 ```
 https://github.com/Symorglass/WeaveTalk-App.git
 ```
