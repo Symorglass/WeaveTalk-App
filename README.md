@@ -48,7 +48,7 @@ npm install
 ## Environment Variables Setup
 Create a new file named `.env` in the root of your project and add the following content:
 
-This project uses [Clerk](https://clerk.com/) to provide backend services on authentication and user management. For data management, this project uses a [MongoDB](https://www.mongodb.com/) NoSQL database to store application data. This project also uses uploadthing to handle user image upload.
+This project uses [Clerk](https://clerk.com/) to provide backend services on authentication and user management. For data management, this project uses a [MongoDB](https://www.mongodb.com/) NoSQL database to store application data. This project also uses [Uploadthing](https://uploadthing.com/) to handle user image upload.
    
 Replace the placeholder values with your actual credentials obtained from [MongoDB](https://www.mongodb.com/), [Clerk](https://clerk.com/), and [Uploadthing](https://uploadthing.com/). 
 
