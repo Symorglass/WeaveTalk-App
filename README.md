@@ -72,7 +72,7 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/onboarding
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 ```
 
-## Run the development server:
+## Run the Project on Development Server:
 
 ```
 npm run dev
@@ -86,5 +86,5 @@ To deploy this web application, use the [Vercel Platform](https://vercel.com/new
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## To be improved
+## To be Improved
 
