@@ -13,7 +13,7 @@ Frontend - primarily deal with the user interface and client-side interactions:
 - Shadcn UI  <!-- A UI framework or library, assuming it is similar to other design systems used to build UI components. -->
 - Zod, for form validation <!-- A TypeScript-first schema validation library, used in the frontend for form validation. -->
 
-Backend Technologies - used for server-side computing, data management, and backend services:
+Backend - used for server-side computing, user authentication, data management, and backend services:
 
 - MongoDB <!-- A NoSQL database used to store application data. -->
 - Clerk, for authentication and user management <!--  Provides backend services for authentication and user management. -->
