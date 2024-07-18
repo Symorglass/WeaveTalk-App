@@ -93,7 +93,6 @@ To deploy this web application, use the [Vercel Platform](https://vercel.com/new
 
 ## How to improve?
 
-**Scalability**
 - Optimize Next.js server-side rendering performance by improving serverless functions to offload tasks from the application server.
 - Utilize MongoDB’s replication and sharding features to distribute data across multiple servers, enhancing both data availability and load distribution.
 - Enhance the indexing strategy for more efficient data retrieval methods to reduce latency.
