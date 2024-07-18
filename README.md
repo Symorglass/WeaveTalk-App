@@ -17,7 +17,7 @@ Frontend - primarily deal with the user interface and client-side interactions:
 - React Hook Form <!-- A library to manage forms in React with minimal re-renders. -->
 - TypeScript <!-- A superset of JavaScript offering static type definitions; used in both frontend and backend development, but listed here because it's essential for structuring robust backend services and APIs when used on the server-side. -->
 - TailwindCSS <!-- A utility-first CSS framework for rapidly building custom user interfaces. --> 
-- Shadcn UI  <!-- A UI framework or library, assuming it is similar to other design systems used to build UI components. -->
+- Shadcn UI  <!-- A UI framework or library, it is similar to other design systems used to build UI components. I used the form component in this project. -->
 - Zod, for form validation <!-- A TypeScript-first schema validation library, used in the frontend for form validation. -->
 
 Backend - used for server-side computing, user authentication, data management, and backend services:
@@ -110,6 +110,14 @@ Database Operations: Enhance database indexing and queries to speed up data acce
 Recommendation Engine: Develop sophisticated algorithms for user and community recommendations based on interests and interactions to enhance user engagement.
 Security Enhancements: Regularly update security practices to protect user data and prevent unauthorized access.
 -->
+
+## Resources
+
+**shadcn/ui**
+
+- [Installation and start shadcn/ui](https://ui.shadcn.com/docs/installation/next).
+- Building form components with [React Hook Form](https://react-hook-form.com/) and [Zod](https://zod.dev/).
+- [Zod](https://zod.dev/) for form validation.
 
 ## Special Mention
 
