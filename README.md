@@ -1,6 +1,6 @@
 # WeaveTalk
 
-WeaveTalk is a community platform designed to foster connections and discussions among users across topics and interests. Inspired by popular social media dynamics, WeaveTalk integrates MERN stack technologies to deliver a engaging user experience. This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+WeaveTalk is a community platform designed to foster connections and discussions among users across topics and interests. Inspired by popular social media dynamics, WeaveTalk integrates MERN stack technologies to deliver an engaging user experience. This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Feature Highlights
 
